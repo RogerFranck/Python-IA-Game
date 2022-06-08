@@ -4,7 +4,7 @@ import random
 
 
 class Gesture:
-    gesture_names = ("rock", "paper", "scissors")
+    gesture_names = ("rock", "paper", "scissors", "handUp", "handDown")
 
     def __init__(self, name):
         self.name = name
@@ -23,7 +23,8 @@ class Gesture:
         return self.name == other.name
 
     def __gt__(self, other):
-        return stronger_gesture[other.name] == self.name
+        if other.name != "handUp" and other.name != "handDown":
+            return stronger_gesture[other.name] == self.name
 
     def __lt__(self, other):
         return stronger_gesture[other.name] != self.name

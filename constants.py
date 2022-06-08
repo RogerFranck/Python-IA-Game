@@ -16,5 +16,5 @@ computer_gestures = {
 stronger_gesture = {
     "rock":  "paper",
     "paper": "scissor",
-    "scissors": "rock"
+    "scissors": "rock",
 }

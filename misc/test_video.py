@@ -28,7 +28,7 @@ while cap.isOpened():
     # find max indexed array
     max_index = np.argmax(predictions[0])
 
-    gesture = ('empty','paper', 'rock', 'scissors')
+    gesture = ('empty','paper', 'rock', 'scissors', 'handUp', 'handDown')
     predicted_gesture = gesture[max_index]
     predict_percent = predictions[0][max_index]*100
 

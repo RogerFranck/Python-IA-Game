@@ -17,7 +17,7 @@ class GestureModel:
     def __init__(self, model_path_, model_weights_path_):
         self.model = model_from_json(open(model_path_,"r").read())
         self.model.load_weights(model_weights_path_)
-        self.gestures = ('empty', 'paper', 'rock', 'scissors')
+        self.gestures = ('empty', 'paper', 'rock', 'scissors', 'handUp', 'handDown')
 
     @classmethod
     def preprocess(cls, frame):
@@ -88,8 +88,9 @@ class WebCam:
                         hand_exited += 1
 
                     person_gesture = Gesture(gesture)
-                    image = cv2.imread(computer_gestures[computer_gesture.name])
-                    image = cv2.resize(image, (180, 180))
+                    if computer_gesture.name != "handUp" and computer_gesture.name != "handDown":
+                        image = cv2.imread(computer_gestures[computer_gesture.name])
+                        image = cv2.resize(image, (180, 180))
                     x_offset, y_offset = (350, 100)
                     frame[y_offset:y_offset + image.shape[0], x_offset:x_offset + image.shape[1]] = image
                     result = RockPaperScissors.get_result(person_gesture, computer_gesture)
@@ -114,10 +115,10 @@ class WebCam:
             cls.create_text(frame, f"frames: {frames_elapsed}", org=(100, 390), color=(0, 0, 0),
                             font_scale=1, thickness=2)
             cls.create_text(frame, f"Round: {rounds}", org=(150, 50), color=(255, 0, 0))
-            cls.create_text(frame, f"Person: {scores[0]}", org=(100, 310), color=(255, 0, 0))
-            cls.create_text(frame, f"Computer: {scores[1]}", org=(350, 310), color=(255, 0, 0))
+            cls.create_text(frame, f"Persona: {scores[0]}", org=(100, 310), color=(255, 0, 0))
+            cls.create_text(frame, f"Maquina: {scores[1]}", org=(350, 310), color=(255, 0, 0))
             frame = cv2.resize(frame, (1000, 700))
-            cv2.imshow('Rock Paper Scissors!', frame)
+            cv2.imshow('Piedra papel o tijera!', frame)
             if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed
                 break
 
@@ -130,7 +131,7 @@ class WebCam:
                 continue
             flipped_frame = cv2.flip(frame, 1)
             resized_frame = cv2.resize(flipped_frame, (1000, 700))
-            cv2.imshow('Rock Paper Scissors!', resized_frame)
+            cv2.imshow('Piedra papel o tijera!', resized_frame)
             if cv2.waitKey(10) == ord('q'):  # wait until 'q' key is pressed
                 break
 
